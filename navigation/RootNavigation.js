@@ -3,13 +3,14 @@ import React from 'react';
 
 import ScreenUtil from '../base/ScreenUtil';
 //登录相关
-import Auth from '../modules/login/Auth';
-import Login from '../modules/login/Login';
+import ModifyUserInfo from '../modules/user/ModifyUserInfo';
+import Login from '../modules/user/login/Login';
 //首页
 import Community from '../modules/home/Community';
 import Shop from '../modules/home/Shop';
 import Translate from '../modules/home/Translate';
 import User from '../modules/home/User';
+import ShopCart from '../modules/home/ShopCart';
 //图标
 import { Icon } from '@ant-design/react-native';
 
@@ -18,6 +19,13 @@ const ShopNavigator = createStackNavigator({
     Shop: Shop
 }, {
         initialRouteName: 'Shop'
+    });
+
+//购物车
+const ShopCartNavigator = createStackNavigator({
+    ShopCart: ShopCart
+}, {
+        initialRouteName: 'ShopCart'
     });
 
 //翻译
@@ -29,7 +37,9 @@ const TranslateNavigator = createStackNavigator({
 
 //用户中心
 const UserNavigator = createStackNavigator({
-    User: User
+    User: User,
+    Login: Login,
+    ModifyUserInfo: ModifyUserInfo
 }, {
         initialRouteName: 'User'
     });
@@ -62,6 +72,13 @@ const HomeBottomTabNavigator = createBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: <Icon name="shop" size={ScreenUtil.scaleSize(40)} />,
             tabBarLabel: '商城'
+        }
+    },
+    ShopCartNavigator: {
+        screen: ShopCartNavigator,
+        navigationOptions: {
+            tabBarIcon: <Icon name="shopping-cart" size={ScreenUtil.scaleSize(40)} />,
+            tabBarLabel: '购物车'
         }
     },
     UserNavigator: {

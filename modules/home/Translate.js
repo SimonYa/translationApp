@@ -6,7 +6,7 @@ import Container from '../common/Container';
 import TranCardContainer from '../common/transalte_common/TranCardContainer';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-import { Button, Card, WhiteSpace, WingBlank, Icon } from '@ant-design/react-native';
+import { Button, Card, WhiteSpace, Icon, Toast } from '@ant-design/react-native';
 
 const baseUrl = Base.baseUrl;
 class Translate extends Component {
@@ -222,8 +222,27 @@ class Translate extends Component {
         }
         this.condition.isClickTranslate = true;
 
-        let inputText = this.state.inputText;
         let translateParamsObj = this.condition.translateParamsObj;
+
+        if (translateParamsObj === null) {
+            Toast.fail('翻译出错！', 2);
+            this.condition.isClickTranslate = false;
+            return;
+        }
+
+        if (translateParamsObj.sourceLanguage === translateParamsObj.targetLanguage) {
+            Toast.info('翻译语言不能相同', 2);
+            this.condition.isClickTranslate = false;
+            return;
+        }
+        let inputText = this.state.inputText;
+        if (inputText === null || inputText === '' || inputText.length === 0) {
+            Toast.info('翻译内容不能为空', 2);
+            this.condition.isClickTranslate = false;
+            return;
+        }
+
+
         translateParamsObj.sourceText = inputText;
         this.condition.translateParamsObj = translateParamsObj;
         this.translateFetch();

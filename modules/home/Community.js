@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ToastAndroid } from 'react-native';
+import { Provider, Button, Toast } from '@ant-design/react-native';
 
 class Community extends Component {
     static navigationOptions = {
@@ -9,13 +10,26 @@ class Community extends Component {
     state = {}
     render() {
         return (
-            <View>
-                <Text>
-                    this is Community Page
+            <Provider>
+                <View>
+                    <Text>
+                        this is Community Page
                 </Text>
-            </View>
+                    <Button onPress={showToast} style={{ marginTop: 5, backgroundColor: 'red' }} type="primary" size='large'>翻译</Button>
+                </View>
+            </Provider>
         );
     }
+
+    toastTest = () => {
+
+    }
 }
+
+function showToast() {
+    Toast.info('This is a toast tips 2 !!!', 3);
+}
+
+
 
 export default Community;
