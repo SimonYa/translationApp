@@ -6,7 +6,7 @@ import Container from '../common/Container';
 import TranCardContainer from '../common/transalte_common/TranCardContainer';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-import { Button, Card, WhiteSpace, TextareaItem, Icon } from '@ant-design/react-native';
+import { Button, Card, WhiteSpace, WingBlank, Icon } from '@ant-design/react-native';
 
 const baseUrl = Base.baseUrl;
 class Translate extends Component {

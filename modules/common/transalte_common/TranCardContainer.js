@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { Card, WingBlank } from '@ant-design/react-native';
+import { Card } from '@ant-design/react-native';
 
 import ScreenUtil from '../../../base/ScreenUtil';
 
@@ -8,7 +8,6 @@ class TranCardContainer extends PureComponent {
 
     render() {
         return (
-            <WingBlank style={{ flex: 1 }} size="sm">
                 <Card style={{
                     flex: 1,
                     flexDirection: 'column',
@@ -19,7 +18,6 @@ class TranCardContainer extends PureComponent {
                 }}>
                     {this.props.children}
                 </Card>
-            </WingBlank>
         );
     }
 }
