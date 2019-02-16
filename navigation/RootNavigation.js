@@ -4,7 +4,7 @@ import React from 'react';
 import ScreenUtil from '../base/ScreenUtil';
 //登录相关
 import ModifyUserInfo from '../modules/user/ModifyUserInfo';
-import Login from '../modules/user/login/Login';
+import Register from '../modules/user/login/Register';
 //首页
 import Community from '../modules/home/Community';
 import Shop from '../modules/home/Shop';
@@ -38,7 +38,7 @@ const TranslateNavigator = createStackNavigator({
 //用户中心
 const UserNavigator = createStackNavigator({
     User: User,
-    Login: Login,
+    Register: Register,
     ModifyUserInfo: ModifyUserInfo
 }, {
         initialRouteName: 'User'
