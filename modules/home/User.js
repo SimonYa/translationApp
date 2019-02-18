@@ -318,10 +318,11 @@ class User extends Component {
 
     //头像点击处理事件
     handleLogin = () => {
+        // this.selfState.isLogin = true;
         if (this.selfState.isLogin) {
             this.props.navigation.navigate('ModifyUserInfo');
         } else {
-            this.props.navigation.navigate('Register');
+            this.props.navigation.navigate('Login');
         }
     }
 

@@ -1,10 +1,18 @@
-import { createSwitchNavigator, createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation';
+import {
+    createSwitchNavigator,
+    createBottomTabNavigator,
+    createStackNavigator,
+    createAppContainer
+} from 'react-navigation';
+import { View } from 'react-native';
 import React from 'react';
 
 import ScreenUtil from '../base/ScreenUtil';
 //登录相关
 import ModifyUserInfo from '../modules/user/ModifyUserInfo';
 import Register from '../modules/user/login/Register';
+import Login from '../modules/user/login/Login';
+import ForgotPass from '../modules/user/login/ForgotPass';
 //首页
 import Community from '../modules/home/Community';
 import Shop from '../modules/home/Shop';
@@ -18,14 +26,28 @@ import { Icon } from '@ant-design/react-native';
 const ShopNavigator = createStackNavigator({
     Shop: Shop
 }, {
-        initialRouteName: 'Shop'
+        initialRouteName: 'Shop',
+        defaultNavigationOptions: {
+            headerTitleStyle: {
+                flex: 1,
+                textAlign: 'center'
+            },
+            headerRight: <View />
+        }
     });
 
 //购物车
 const ShopCartNavigator = createStackNavigator({
     ShopCart: ShopCart
 }, {
-        initialRouteName: 'ShopCart'
+        initialRouteName: 'ShopCart',
+        defaultNavigationOptions: {
+            headerTitleStyle: {
+                flex: 1,
+                textAlign: 'center'
+            },
+            headerRight: <View />
+        }
     });
 
 //翻译
@@ -33,22 +55,45 @@ const TranslateNavigator = createStackNavigator({
     Translate: Translate
 }, {
         initialRouteName: 'Translate',
+        defaultNavigationOptions: {
+            headerTitleStyle: {
+                flex: 1,
+                textAlign: 'center'
+            },
+            headerRight: <View />
+        }
     });
 
 //用户中心
 const UserNavigator = createStackNavigator({
     User: User,
     Register: Register,
-    ModifyUserInfo: ModifyUserInfo
+    ModifyUserInfo: ModifyUserInfo,
+    Login: Login,
+    ForgotPass: ForgotPass
 }, {
-        initialRouteName: 'User'
+        initialRouteName: 'User',
+        defaultNavigationOptions: {
+            headerTitleStyle: {
+                flex: 1,
+                textAlign: 'center'
+            },
+            headerRight: <View />
+        }
     });
 
 //社区
 const CommunityNavigator = createStackNavigator({
     Community: Community
 }, {
-        initialRouteName: 'Community'
+        initialRouteName: 'Community',
+        defaultNavigationOptions: {
+            headerTitleStyle: {
+                flex: 1,
+                textAlign: 'center'
+            },
+            headerRight: <View />
+        }
     });
 
 //底部导航栏

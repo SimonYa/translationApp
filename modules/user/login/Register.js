@@ -4,8 +4,12 @@ import Container from '../../common/Container';
 import { Card, InputItem, Button, Toast } from '@ant-design/react-native';
 import ScreenUtil from '../../../base/ScreenUtil';
 
-const { height, width } = Dimensions.get('window');
+// const { height, width } = Dimensions.get('window');
 class Register extends Component {
+    static navigationOptions = {
+        title: '注册'
+    };
+
 
     state = {
         code: '获取验证码',
@@ -148,7 +152,6 @@ class Register extends Component {
             return;
         }
         this.selfState.isClickRegister = true;
-        console.dir(this.state.userInfo);
         let userInfo = this.state.userInfo;
         let confirmPass = this.state.confirmPass;
 
@@ -201,7 +204,6 @@ class Register extends Component {
             return;
         }
 
-        console.log('注册成功');
         this.selfState.isClickRegister = false;
     }
 

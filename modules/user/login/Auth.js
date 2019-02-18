@@ -4,11 +4,6 @@ import { View } from 'react-native';
 class Auth extends Component {
     constructor(props) {
         super(props);
-
-    }
-
-    auth = () => {
-        
     }
 
     render() {
