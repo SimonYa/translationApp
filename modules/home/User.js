@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, ImageBackground, Image, TouchableOpacity, ScrollView, DeviceEventEmitter } from 'react-native';
 import Container from '../common/Container';
 import ScreenUtil from '../../base/ScreenUtil';
 
@@ -17,7 +17,7 @@ class User extends Component {
             //0：非VIP
             vipText: '点击开通',
             isVip: false,
-            userinfo: null
+            userInfo: null
         }
 
         this.selfState = {
@@ -25,10 +25,45 @@ class User extends Component {
         }
     }
 
+    componentWillUnmount() {
+        this.updateUserInfoListener && this.updateUserInfoListener.remove();
+    }
+
+    componentDidMount() {
+
+
+        this.updateUserInfo();
+    }
+
+    updateUserInfo = () => {
+        // storage.remove({
+        //     key: 'userInfo'
+        // });
+        //load 读取
+        storage.load({
+            key: 'userInfo'
+        }).then(userInfo => {
+            if (typeof userInfo !== 'undefined' && userInfo !== null) {
+                this.selfState.isLogin = true;
+                this.setState({ userInfo: userInfo });
+            }
+        }).catch(err => {
+            console.log(err);
+            let userInfo = {
+                name: '去登录',
+                headImg: 'http://bhms-fru-dev.oss-cn-shenzhen.aliyuncs.com/images/8c5a89ce668440f9b25fce8337f704c8.png',
+                vip: 0
+            };
+            this.updateUserInfoListener = this.updateUserInfoListener || DeviceEventEmitter.addListener('updateUserInfo', this.updateUserInfo);
+            this.selfState.isLogin = false;
+            this.setState({ userInfo: userInfo });
+        });
+    }
+
     render() {
 
         let vipText = this.state.vipText;
-        this.state.userinfo = {
+        this.state.userInfo = {
             name: '张三四',
             headImg: 'http://bhms-fru-dev.oss-cn-shenzhen.aliyuncs.com/images/8c5a89ce668440f9b25fce8337f704c8.png'
         };
@@ -56,7 +91,7 @@ class User extends Component {
                                 alignItems: 'center'
                             }}>
                             <Image
-                                source={{ uri: this.state.userinfo.headImg }}
+                                source={{ uri: this.state.userInfo.headImg }}
                                 style={{
                                     width: ScreenUtil.scaleSize(120),
                                     height: ScreenUtil.scaleSize(120),
@@ -67,7 +102,7 @@ class User extends Component {
                                 fontSize: ScreenUtil.setSpText2(26),
                                 color: 'black',
                                 marginTop: ScreenUtil.scaleSize(10)
-                            }}>{this.state.userinfo.name}</Text>
+                            }}>{this.state.userInfo.name}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{

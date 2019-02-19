@@ -12,6 +12,7 @@
     "react-native": "0.57.8",
     "react-native-gesture-handler": "^1.0.12",
     "react-native-modal-dropdown": "^0.6.2",
+    "react-native-storage": "^1.0.0-beta.0",
     "react-navigation": "^3.0.9",
     "save": "^2.3.3"
   },
