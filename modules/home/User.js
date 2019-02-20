@@ -5,7 +5,6 @@ import ScreenUtil from '../../base/ScreenUtil';
 
 import { Icon } from '@ant-design/react-native';
 
-
 class User extends Component {
     static navigationOptions = {
         header: null
@@ -17,56 +16,36 @@ class User extends Component {
             //0：非VIP
             vipText: '点击开通',
             isVip: false,
-            userInfo: null
+            userInfo: null,
+            isLogin: false
         }
 
         this.selfState = {
-            isLogin: false
+
         }
+
+        this.state.userInfo = global.userInfo;
+        this.state.isLogin = global.isLogin;
     }
 
     componentWillUnmount() {
         this.updateUserInfoListener && this.updateUserInfoListener.remove();
     }
 
-    componentDidMount() {
+    updateUserInfo = () => {
+        let userInfo = global.userInfo;
+        let isLogin = global.isLogin;
 
-
-        this.updateUserInfo();
+        this.setState({ userInfo: userInfo, isLogin: isLogin });
     }
 
-    updateUserInfo = () => {
-        // storage.remove({
-        //     key: 'userInfo'
-        // });
-        //load 读取
-        storage.load({
-            key: 'userInfo'
-        }).then(userInfo => {
-            if (typeof userInfo !== 'undefined' && userInfo !== null) {
-                this.selfState.isLogin = true;
-                this.setState({ userInfo: userInfo });
-            }
-        }).catch(err => {
-            console.log(err);
-            let userInfo = {
-                name: '去登录',
-                headImg: 'http://bhms-fru-dev.oss-cn-shenzhen.aliyuncs.com/images/8c5a89ce668440f9b25fce8337f704c8.png',
-                vip: 0
-            };
-            this.updateUserInfoListener = this.updateUserInfoListener || DeviceEventEmitter.addListener('updateUserInfo', this.updateUserInfo);
-            this.selfState.isLogin = false;
-            this.setState({ userInfo: userInfo });
-        });
+    componentDidMount() {
+        this.updateUserInfoListener = DeviceEventEmitter.addListener('updateUserInfo', this.updateUserInfo);
     }
 
     render() {
-
         let vipText = this.state.vipText;
-        this.state.userInfo = {
-            name: '张三四',
-            headImg: 'http://bhms-fru-dev.oss-cn-shenzhen.aliyuncs.com/images/8c5a89ce668440f9b25fce8337f704c8.png'
-        };
+        let userInfo = this.state.userInfo;
 
         return (
             <Container>
@@ -91,7 +70,7 @@ class User extends Component {
                                 alignItems: 'center'
                             }}>
                             <Image
-                                source={{ uri: this.state.userInfo.headImg }}
+                                source={{ uri: userInfo.headImg }}
                                 style={{
                                     width: ScreenUtil.scaleSize(120),
                                     height: ScreenUtil.scaleSize(120),
@@ -102,7 +81,7 @@ class User extends Component {
                                 fontSize: ScreenUtil.setSpText2(26),
                                 color: 'black',
                                 marginTop: ScreenUtil.scaleSize(10)
-                            }}>{this.state.userInfo.name}</Text>
+                            }}>{userInfo.name}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{
@@ -354,7 +333,7 @@ class User extends Component {
     //头像点击处理事件
     handleLogin = () => {
         // this.selfState.isLogin = true;
-        if (this.selfState.isLogin) {
+        if (this.state.isLogin) {
             this.props.navigation.navigate('ModifyUserInfo');
         } else {
             this.props.navigation.navigate('Login');

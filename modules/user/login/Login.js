@@ -36,11 +36,11 @@ class Login extends Component {
 
         Promise.race([fetch(url, {
             method: 'POST',
+            credentials: 'include',
             body: formData
         }), new Promise(function (resolve, reject) {
             setTimeout(() => reject(new Error('请求超时')), timeout);
         })]).then((response) => {
-            console.log(response);
             if (response.ok) {
                 return response.json();
             } else {
@@ -51,9 +51,8 @@ class Login extends Component {
                 return res;
             }
         }).then((data) => {
-            console.dir(data);
             if (data.code === '000') {
-                Toast.info(data.message, 1);
+                Toast.info(data.message, 2);
                 return;
             }
             if (data.code === '200') {
@@ -63,14 +62,17 @@ class Login extends Component {
                     key: 'userInfo', // 注意:请不要在key中使用_下划线符号!
                     data: userInfo
                 }).then(() => {
+                    global.userInfo = userInfo;
+                    global.isLogin = true;
+
                     DeviceEventEmitter.emit('updateUserInfo');
                     this.props.navigation.navigate('User');
                 });
             } else {
-                Toast.info(data.message, 1);
+                Toast.info(data.message, 2);
             }
         }).catch((error) => {
-            Toast.info(error, 1);
+            Toast.info(error, 2);
         }).finally(() => {
             this.selfState.isClickLogin = false;
         });
@@ -190,7 +192,7 @@ class Login extends Component {
 
         //电话号码验证
         if (loginParams.mobile === '' || loginParams.mobile.length === 0) {
-            Toast.info('手机号码不能为空', 1);
+            Toast.info('手机号码不能为空', 2);
             this.selfState.isClickLogin = false;
             return;
         }
@@ -199,20 +201,20 @@ class Login extends Component {
         let mobilePatt = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0-9]{1})|(15[0-3]{1})|(15[4-9]{1})|(18[0-9]{1})|(199))+\d{8})$/;
 
         if (loginParams.mobile.length < 11 || !mobilePatt.test(loginParams.mobile)) {
-            Toast.info('手机号码格式不正确', 1);
+            Toast.info('手机号码格式不正确', 2);
             this.selfState.isClickLogin = false;
             return;
         }
 
         //密码验证
         if (loginParams.password === '' || loginParams.password.length === 0) {
-            Toast.info('密码不能为空', 1);
+            Toast.info('密码不能为空', 2);
             this.selfState.isClickLogin = false;
             return;
         }
 
         if (loginParams.password.length < 6) {
-            Toast.info('密码长度不能少于6', 1);
+            Toast.info('密码长度不能少于6', 2);
             this.selfState.isClickLogin = false;
             return;
         }
@@ -220,7 +222,7 @@ class Login extends Component {
         if (global.isNetConnected) {
             this.loginFetch();
         } else {
-            Toast.info('请检查网络连接', 1);
+            Toast.info('请检查网络连接', 2);
             this.selfState.isClickLogin = false;
         }
     }

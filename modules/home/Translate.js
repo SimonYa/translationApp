@@ -57,6 +57,7 @@ class Translate extends Component {
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
+            credentials: 'include',
             body: paramsStr
         }).then((response) => {
             return response.json();
